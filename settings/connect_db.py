@@ -9,7 +9,7 @@ password = os.environ.get("DBPASSWORD")
 
 
 def connect():
-    credential = ManagedIdentityCredential(client_id=os.environ.get("AZURE_CLIENT_ID"),tenant_id=os.environ.get("AZURE_TENANT_ID"))
+    credential = ManagedIdentityCredential(client_id=os.environ.get("AZURE_CLIENT_ID"))
     token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default").token
     print(f"generated token is {token}")
     #conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, token)
