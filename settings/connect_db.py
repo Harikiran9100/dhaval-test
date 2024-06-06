@@ -5,10 +5,9 @@ from azure.identity import ManagedIdentityCredential,DefaultAzureCredential
 host = os.environ.get("DBHOST")
 dbname = os.environ.get("DBNAME")
 user = os.environ.get("AZURE_CLIENT_NAME")
-
-
+client_id = os.environ.get("AZURE_CLIENT_ID")
 def connect():
-    credential = ManagedIdentityCredential(client_id=os.environ.get("AZURE_CLIENT_ID"))
+    credential = ManagedIdentityCredential(client_id=client_id)
     #token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default")
     #print(f"generated token is {token}")
     #conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, token)
@@ -31,14 +30,13 @@ def connect():
 def fetchData():
     connectors = connect()
     conn,cursor = connectors[0],connectors[1]
-    print("connectors :" + connectors)
+    print("connectors :")
     postgreSQL_select_Query = "select * from users"
     cursor.execute(postgreSQL_select_Query)
     print("query executed")
     publisher_records = cursor.fetchall()
     users = []
     for row in publisher_records:
-        print("\t" + row)
         ls = [row[1],row[2]]
         users.append(ls)
     conn.close()
