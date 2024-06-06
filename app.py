@@ -1,7 +1,7 @@
 import os
 from settings import User
 from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
+                   send_from_directory, url_for,jsonify)
 import sys
 from settings import connect_db
 from azure.identity import ManagedIdentityCredential,DefaultAzureCredential
@@ -16,6 +16,7 @@ def index():
    user_data = User.sendData()
    print("function executed")
    print(user_data)
+   return jsonify({'name': 'sofia', 'email': 'sofia@gmail.com'})
    return render_template('index.html',users=user_data)
 
 @app.route('/favicon.ico')
