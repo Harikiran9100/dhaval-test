@@ -4,7 +4,7 @@ from azure.identity import ManagedIdentityCredential,DefaultAzureCredential,Azur
 
 host = os.environ.get("DBHOST")
 dbname = os.environ.get("DBNAME")
-user = os.environ.get("DBUSER")
+user = os.environ.get("AZURE_CLIENT_NAME")
 password = os.environ.get("DBPASSWORD")
 
 
@@ -13,7 +13,7 @@ def connect():
     token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default")
     print(f"generated token is {token}")
     #conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, token)
-    conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, os.environ.get("AZURE_CLIENT_NAME"), credential.get_token('https://ossrdbms-aad.database.windows.net/.default').token)
+    conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, user, credential.get_token('https://ossrdbms-aad.database.windows.net/.default').token)
     conn = psycopg2.connect(conn_string)
 
 
