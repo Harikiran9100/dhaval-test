@@ -22,4 +22,5 @@ def sendData():
     for user in all_users:
         user = User(user[0],user[1])
         data.append(user)
+    print("---> sned fucntion executed")
     return data
