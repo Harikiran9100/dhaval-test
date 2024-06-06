@@ -1,21 +1,21 @@
 import psycopg2
 import os
-from azure.identity import ManagedIdentityCredential,DefaultAzureCredential,AzureCliCredential
+from azure.identity import ManagedIdentityCredential,DefaultAzureCredential
 
 host = os.environ.get("DBHOST")
 dbname = os.environ.get("DBNAME")
 user = os.environ.get("AZURE_CLIENT_NAME")
-password = os.environ.get("DBPASSWORD")
 
 
 def connect():
     credential = ManagedIdentityCredential(client_id=os.environ.get("AZURE_CLIENT_ID"))
-    token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default")
-    print(f"generated token is {token}")
+    #token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default")
+    #print(f"generated token is {token}")
     #conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, token)
-    #conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, user, credential.get_token('https://ossrdbms-aad.database.windows.net/.default').token)
-    conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, propeladmin, password)
+    conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, user, credential.get_token('https://ossrdbms-aad.database.windows.net/.default').token)
+    #conn_string = "host='{}' dbname='{}' user='{}' password='{}' sslmode='require'".format(host, dbname, user, password)
     conn = psycopg2.connect(conn_string)
+    print("------------YOu are connected to postgress using managed identity------------")
 
 
     # managed_identity_client_id = os.environ.get('AZURE_POSTGRESQL_CLIENTID')
