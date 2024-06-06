@@ -31,14 +31,18 @@ def connect():
 def fetchData():
     connectors = connect()
     conn,cursor = connectors[0],connectors[1]
+    print("connectors :" + connectors)
     postgreSQL_select_Query = "select * from users"
     cursor.execute(postgreSQL_select_Query)
+    print("query executed")
     publisher_records = cursor.fetchall()
     users = []
     for row in publisher_records:
+        print("\t" + row)
         ls = [row[1],row[2]]
         users.append(ls)
     conn.close()
+    print("connection closed")
     cursor.close()
     
     return users
